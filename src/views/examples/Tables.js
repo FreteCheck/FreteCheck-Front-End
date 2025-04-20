@@ -162,7 +162,7 @@ const Tables = () => {
                           delay={0}
                           target="tooltip996637554"
                         >
-                          Jessica Doe
+                          Vagner Ferreira
                         </UncontrolledTooltip>
                       </div>
                     </td>
@@ -312,7 +312,7 @@ const Tables = () => {
                           delay={0}
                           target="tooltip476840018"
                         >
-                          Jessica Doe
+                          Vagner Ferreira
                         </UncontrolledTooltip>
                       </div>
                     </td>
@@ -460,7 +460,7 @@ const Tables = () => {
                           delay={0}
                           target="tooltip621168444"
                         >
-                          Jessica Doe
+                          Vagner Ferreira
                         </UncontrolledTooltip>
                       </div>
                     </td>
@@ -610,7 +610,7 @@ const Tables = () => {
                           delay={0}
                           target="tooltip108714769"
                         >
-                          Jessica Doe
+                          Vagner Ferreira
                         </UncontrolledTooltip>
                       </div>
                     </td>
@@ -760,7 +760,7 @@ const Tables = () => {
                           delay={0}
                           target="tooltip757459971"
                         >
-                          Jessica Doe
+                          Vagner Ferreira
                         </UncontrolledTooltip>
                       </div>
                     </td>
@@ -989,7 +989,7 @@ const Tables = () => {
                           delay={0}
                           target="tooltip237898869"
                         >
-                          Jessica Doe
+                          Vagner Ferreira
                         </UncontrolledTooltip>
                       </div>
                     </td>
@@ -1136,7 +1136,7 @@ const Tables = () => {
                           delay={0}
                           target="tooltip904098289"
                         >
-                          Jessica Doe
+                          Vagner Ferreira
                         </UncontrolledTooltip>
                       </div>
                     </td>
@@ -1284,7 +1284,7 @@ const Tables = () => {
                           delay={0}
                           target="tooltip362118155"
                         >
-                          Jessica Doe
+                          Vagner Ferreira
                         </UncontrolledTooltip>
                       </div>
                     </td>
@@ -1434,7 +1434,7 @@ const Tables = () => {
                           delay={0}
                           target="tooltip638048561"
                         >
-                          Jessica Doe
+                          Vagner Ferreira
                         </UncontrolledTooltip>
                       </div>
                     </td>
@@ -1584,7 +1584,7 @@ const Tables = () => {
                           delay={0}
                           target="tooltip951447946"
                         >
-                          Jessica Doe
+                          Vagner Ferreira
                         </UncontrolledTooltip>
                       </div>
                     </td>
