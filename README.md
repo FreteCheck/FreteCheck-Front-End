@@ -7,6 +7,7 @@
 Os desenvolvedores deste projeto são:
 + Vagner Ferreira Lima Junior: [@vagnerflj](https://github.com/vagnerflj)
 + Eliphaz Gabriel Ferra Pedroso: [@eliphazGFP](https://github.com/eliphazGFP)
++ João Gabriel Antunes Castilho: [@oJoao27](https://github.com/oJoao27)
 
 
 ## 👨‍🏫 Instrutores
