@@ -1,20 +1,3 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.2.4
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2024 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
 import { useLocation, Route, Routes, Navigate } from "react-router-dom";
 // reactstrap components
@@ -42,9 +25,8 @@ const Admin = (props) => {
         return (
           <Route path={prop.path} element={prop.component} key={key} exact />
         );
-      } else {
-        return null;
       }
+      return null;
     });
   };
 
@@ -60,22 +42,29 @@ const Admin = (props) => {
     return "Brand";
   };
 
+  // ❗ Ocultar barra e menu lateral na home (/admin/index)
+  const hideLayout = location.pathname === "/admin/index";
+
   return (
     <>
-      <Sidebar
-        {...props}
-        routes={routes}
-        logo={{
-          innerLink: "/admin/index",
-          imgSrc: require("../assets/img/brand/Logo frete Check.png"),
-          imgAlt: "...",
-        }}
-      />
-      <div className="main-content" ref={mainContent}>
-        <AdminNavbar
+      {!hideLayout && (
+        <Sidebar
           {...props}
-          brandText={getBrandText(props?.location?.pathname)}
+          routes={routes}
+          logo={{
+            innerLink: "/admin/index",
+            imgSrc: require("../assets/img/brand/Logo frete Check.png"),
+            imgAlt: "...",
+          }}
         />
+      )}
+      <div className="main-content" ref={mainContent}>
+        {!hideLayout && (
+          <AdminNavbar
+            {...props}
+            brandText={getBrandText(props?.location?.pathname)}
+          />
+        )}
         <Routes>
           {getRoutes(routes)}
           <Route path="*" element={<Navigate to="/admin/index" replace />} />
