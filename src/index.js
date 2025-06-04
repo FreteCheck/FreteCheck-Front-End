@@ -8,7 +8,7 @@ import "assets/scss/argon-dashboard-react.scss";
 
 import AdminLayout from "layouts/Admin.js";
 import AuthLayout from "layouts/Auth.js";
-import Home from "frete/Home"; // 👈 import do seu novo componente
+import Home from "frete/Home";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -17,8 +17,8 @@ root.render(
     <Routes>
       <Route path="/admin/*" element={<AdminLayout />} />
       <Route path="/auth/*" element={<AuthLayout />} />
-      <Route path="/home" element={<Home />} /> {/* 👈 nova rota */}
-      <Route path="*" element={<Navigate to="/home" replace />} /> {/* 👈 redirecionamento */}
+      <Route path="/home" element={<Home />} /> 
+      <Route path="*" element={<Navigate to="/home" replace />} />
     </Routes>
   </BrowserRouter>
 );
