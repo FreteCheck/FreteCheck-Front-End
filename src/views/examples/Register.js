@@ -1,22 +1,4 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.2.4
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2024 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-
-// reactstrap components
+import React from "react";
 import {
   Button,
   Card,
@@ -31,73 +13,72 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import { useNavigate } from "react-router-dom";
+
+import bgImage from "../../assets/img/bg-fretecheck.png";
 
 const Register = () => {
+  const navigate = useNavigate();
+
   return (
-    <>
+    <div
+      className="min-vh-100 d-flex justify-content-center align-items-center text-white"
+      style={{
+        backgroundImage: `url(${bgImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundAttachment: "fixed",
+        padding: "2rem",
+      }}
+    >
       <Col lg="6" md="8">
-        <Card className="bg-secondary shadow border-0">
-          <CardHeader className="bg-transparent pb-5">
-            <div className="text-muted text-center mt-2 mb-4">
-              <small>Sign up with</small>
-            </div>
-            <div className="text-center">
-              <Button
-                className="btn-neutral btn-icon mr-4"
-                color="default"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-              >
-                <span className="btn-inner--icon">
-                  <img
-                    alt="..."
-                    src={
-                      require("../../assets/img/icons/common/github.svg")
-                        .default
-                    }
-                  />
-                </span>
-                <span className="btn-inner--text">Github</span>
-              </Button>
-              <Button
-                className="btn-neutral btn-icon"
-                color="default"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-              >
-                <span className="btn-inner--icon">
-                  <img
-                    alt="..."
-                    src={
-                      require("../../assets/img/icons/common/google.svg")
-                        .default
-                    }
-                  />
-                </span>
-                <span className="btn-inner--text">Google</span>
-              </Button>
-            </div>
+        {/* Logo */}
+        <div className="text-center mb-4">
+          <img
+            src={require("../../assets/img/brand/Logo frete Check.png")}
+            alt="Logo FreteCheck"
+            style={{
+              maxHeight: "100px",
+              filter: "drop-shadow(0px 0px 6px rgba(255, 204, 0, 0.9))",
+            }}
+          />
+        </div>
+
+        {/* Card */}
+        <Card
+          className="shadow border-0"
+          style={{
+            borderRadius: "15px",
+            backgroundColor: "rgba(0, 0, 0, 0.85)",
+            color: "#fff",
+          }}
+        >
+          <CardHeader className="bg-transparent pb-4 text-center">
+            <h4 style={{ color: "#FFC107" }}>Criar nova conta</h4>
+            <small className="text-white">
+              Preencha os dados para se registrar
+            </small>
           </CardHeader>
-          <CardBody className="px-lg-5 py-lg-5">
-            <div className="text-center text-muted mb-4">
-              <small>Or sign up with credentials</small>
-            </div>
+
+          <CardBody className="px-lg-5 py-lg-4">
             <Form role="form">
               <FormGroup>
                 <InputGroup className="input-group-alternative mb-3">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>
-                      <i className="ni ni-hat-3" />
+                      <i className="ni ni-hat-3 text-warning" />
                     </InputGroupText>
                   </InputGroupAddon>
-                  <Input placeholder="Name" type="text" />
+                  <Input placeholder="Nome" type="text" />
                 </InputGroup>
               </FormGroup>
+
               <FormGroup>
                 <InputGroup className="input-group-alternative mb-3">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>
-                      <i className="ni ni-email-83" />
+                      <i className="ni ni-email-83 text-warning" />
                     </InputGroupText>
                   </InputGroupAddon>
                   <Input
@@ -107,26 +88,22 @@ const Register = () => {
                   />
                 </InputGroup>
               </FormGroup>
+
               <FormGroup>
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>
-                      <i className="ni ni-lock-circle-open" />
+                      <i className="ni ni-lock-circle-open text-warning" />
                     </InputGroupText>
                   </InputGroupAddon>
                   <Input
-                    placeholder="Password"
+                    placeholder="Senha"
                     type="password"
                     autoComplete="new-password"
                   />
                 </InputGroup>
               </FormGroup>
-              <div className="text-muted font-italic">
-                <small>
-                  password strength:{" "}
-                  <span className="text-success font-weight-700">strong</span>
-                </small>
-              </div>
+
               <Row className="my-4">
                 <Col xs="12">
                   <div className="custom-control custom-control-alternative custom-checkbox">
@@ -140,25 +117,47 @@ const Register = () => {
                       htmlFor="customCheckRegister"
                     >
                       <span className="text-muted">
-                        I agree with the{" "}
-                        <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                          Privacy Policy
+                        Concordo com a{" "}
+                        <a href="#!" onClick={(e) => e.preventDefault()} className="text-warning">
+                          Política de Privacidade
                         </a>
                       </span>
                     </label>
                   </div>
                 </Col>
               </Row>
+
               <div className="text-center">
-                <Button className="mt-4" color="primary" type="button">
-                  Create account
+                <Button
+                  className="mt-3"
+                  style={{
+                    backgroundColor: "#FFC107",
+                    color: "#000",
+                    fontWeight: "bold",
+                    border: "none",
+                  }}
+                  type="button"
+                >
+                  Criar conta
                 </Button>
               </div>
             </Form>
           </CardBody>
         </Card>
+
+        <Row className="mt-3">
+          <Col className="text-center">
+            <span
+              className="text-warning"
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate("/auth/login")}
+            >
+              <small>Já tem uma conta? Entrar</small>
+            </span>
+          </Col>
+        </Row>
       </Col>
-    </>
+    </div>
   );
 };
 

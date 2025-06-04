@@ -42,7 +42,6 @@ const Admin = (props) => {
     return "Brand";
   };
 
-  // ❗ Ocultar barra e menu lateral na home (/admin/index)
   const hideLayout = location.pathname === "/admin/index";
 
   return (
@@ -70,7 +69,7 @@ const Admin = (props) => {
           <Route path="*" element={<Navigate to="/admin/index" replace />} />
         </Routes>
         <Container fluid>
-          <AdminFooter />
+          {!hideLayout && <AdminFooter />}
         </Container>
       </div>
     </>
