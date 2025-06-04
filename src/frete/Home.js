@@ -11,6 +11,7 @@ import {
 } from "reactstrap";
 import { FaMoon, FaSun, FaBars } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import bgImage from "../assets/img/bg-fretecheck.png"; // certifique-se que o caminho esteja correto
 
 const fakeData = [
   { id: 1, title: "Frete São Paulo → Curitiba", description: "Carga até 300kg - R$ 800" },
@@ -22,8 +23,8 @@ const fakeData = [
 const Home = () => {
   const [dark, setDark] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const navigate = useNavigate();
   const menuRef = useRef(null);
+  const navigate = useNavigate();
 
   const toggleTheme = () => {
     setDark(!dark);
@@ -31,7 +32,6 @@ const Home = () => {
     document.body.classList.toggle("text-white");
   };
 
-  // Fecha o menu se clicar fora dele
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -41,72 +41,103 @@ const Home = () => {
 
     if (menuOpen) {
       document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
     }
-
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [menuOpen]);
 
   return (
-    <div className={`min-vh-100 ${dark ? "bg-dark text-white" : ""}`} style={{ paddingTop: "2rem" }}>
-      {/* Top bar com ícones */}
-      <div className="d-flex justify-content-end align-items-center px-4 mb-3">
+    <div
+      className="min-vh-100 text-white"
+      style={{
+        paddingTop: "1rem",
+        backgroundImage: `url(${bgImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundAttachment: "fixed"
+      }}
+    >
+      {/* Top bar */}
+      <div className="d-flex justify-content-between align-items-center px-4 mb-3">
         <Button color="link" onClick={() => setMenuOpen(!menuOpen)}>
-          <FaBars size={20} />
+          <FaBars size={24} color="#FFC107" />
         </Button>
         <Button color="link" onClick={toggleTheme}>
-          {dark ? <FaSun size={20} /> : <FaMoon size={20} />}
+          {dark ? <FaSun size={20} color="#FFC107" /> : <FaMoon size={20} color="#FFC107" />}
         </Button>
       </div>
 
-      {/* Menu lateral à direita */}
+      {/* Menu lateral */}
       {menuOpen && (
         <div
           ref={menuRef}
           style={{
             position: "fixed",
             top: "0",
-            right: "0",
+            left: "0",
             width: "250px",
             height: "100%",
-            backgroundColor: dark ? "#343a40" : "#f8f9fa",
-            boxShadow: "-2px 0 5px rgba(0,0,0,0.3)",
+            backgroundColor: dark ? "#212121" : "#fff8e1",
+            boxShadow: "2px 0 5px rgba(0,0,0,0.3)",
             padding: "1rem",
             zIndex: 1050,
           }}
         >
-          <p><strong>Menu:</strong></p>
+          <p style={{ color: "#FFC107", fontWeight: "bold" }}>Menu:</p>
           <ul style={{ listStyle: "none", paddingLeft: 0 }}>
-            <li className="mb-2">
-              <Button color="link" onClick={() => navigate("/auth/login")}>Ir para Login</Button>
-            </li>
-            <li className="mb-2">
-              <Button color="link">Meus Fretes</Button>
-            </li>
-            <li className="mb-2">
-              <Button color="link">Perfil</Button>
-            </li>
-            <li>
-              <Button color="link">Sair</Button>
-            </li>
+            <li className="mb-2"><Button color="link" style={{ color: "#FFC107" }} onClick={() => navigate("/auth/login")}>Ir para Login</Button></li>
+            <li className="mb-2"><Button color="link" style={{ color: "#FFC107" }}>Meus Fretes</Button></li>
+            <li className="mb-2"><Button color="link" style={{ color: "#FFC107" }}>Perfil</Button></li>
+            <li><Button color="link" style={{ color: "#FFC107" }}>Sair</Button></li>
           </ul>
         </div>
       )}
 
-      {/* Conteúdo principal */}
+      {/* Logo */}
+      <div className="text-center mb-4">
+        <img
+          src={require("../assets/img/brand/Logo frete Check.png")}
+          alt="Logo FreteCheck"
+          style={{
+            maxHeight: "130px",
+            marginTop: "0px",
+            filter: "drop-shadow(0px 0px 6px rgba(255, 204, 0, 0.8))"
+          }}
+        />
+      </div>
+
+      {/* Cards */}
       <Container>
-        <h2 className="mb-4 text-center">Oportunidades de Frete</h2>
         <Row>
           {fakeData.map((item) => (
             <Col lg="12" md="12" key={item.id} className="mb-4">
-              <Card className={`shadow ${dark ? "bg-secondary text-white" : ""}`} style={{ padding: "1rem", minHeight: "140px" }}>
+              <Card
+                className="shadow"
+                style={{
+                  padding: "1rem",
+                  minHeight: "140px",
+                  borderRadius: "12px",
+                  backgroundColor: "rgba(255, 255, 255, 0.95)",
+                  backdropFilter: "blur(4px)",
+                  color: "#000"
+                }}
+              >
                 <CardBody>
                   <CardTitle tag="h4" className="fw-bold">{item.title}</CardTitle>
                   <CardText className="mb-3">{item.description}</CardText>
-                  <Button color="primary" block>Visualizar</Button>
+                  <Button
+                    style={{
+                      backgroundColor: "#FFC107",
+                      color: "#000",
+                      fontWeight: "bold",
+                      border: "none"
+                    }}
+                    block
+                  >
+                    Visualizar
+                  </Button>
                 </CardBody>
               </Card>
             </Col>
