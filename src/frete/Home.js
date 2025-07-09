@@ -135,6 +135,7 @@ const Home = () => {
                       border: "none"
                     }}
                     block
+                    onClick={() => navigate(`/admin/frete/${item.id}`)}  // Navega para detalhes do frete
                   >
                     Visualizar
                   </Button>
