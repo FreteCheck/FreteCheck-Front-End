@@ -7,17 +7,44 @@ import {
   CardBody,
   CardTitle,
   CardText,
-  Button
+  Button,
+  Badge
 } from "reactstrap";
-import { FaMoon, FaSun, FaBars } from "react-icons/fa";
+import { FaMoon, FaSun, FaBars, FaStar, FaTruck, FaPhoneAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import bgImage from "../assets/img/bg-fretecheck.png"; // certifique-se que o caminho esteja correto
+import bgImage from "../assets/img/bg-fretecheck.png";
 
 const fakeData = [
-  { id: 1, title: "Frete São Paulo → Curitiba", description: "Carga até 300kg - R$ 800" },
-  { id: 2, title: "Frete Curitiba → Londrina", description: "Carga leve - R$ 500" },
-  { id: 3, title: "Frete Rio de Janeiro → Belo Horizonte", description: "Entrega expressa - R$ 1000" },
-  { id: 4, title: "Frete Maringá → Cascavel", description: "Frágil - R$ 600" },
+  {
+    id: 1,
+    title: "Frete São Paulo → Curitiba",
+    description: "Carga até 300kg - R$ 800",
+    image: "https://source.unsplash.com/800x400/?truck",
+    rating: 4.5,
+    driver: "Carlos Silva",
+    status: "Disponível",
+    phone: "(11) 98888-1122"
+  },
+  {
+    id: 2,
+    title: "Frete Curitiba → Londrina",
+    description: "Carga leve - R$ 500",
+    image: "https://source.unsplash.com/800x400/?cargo",
+    rating: 4.0,
+    driver: "Joana Lima",
+    status: "Em andamento",
+    phone: "(41) 97777-2233"
+  },
+  {
+    id: 3,
+    title: "Frete Rio de Janeiro → BH",
+    description: "Entrega expressa - R$ 1000",
+    image: "https://source.unsplash.com/800x400/?highway",
+    rating: 5.0,
+    driver: "Rogério Alves",
+    status: "Entregue",
+    phone: "(21) 96666-3344"
+  },
 ];
 
 const Home = () => {
@@ -38,7 +65,6 @@ const Home = () => {
         setMenuOpen(false);
       }
     };
-
     if (menuOpen) {
       document.addEventListener("mousedown", handleClickOutside);
     }
@@ -56,10 +82,9 @@ const Home = () => {
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
-        backgroundAttachment: "fixed"
+        backgroundAttachment: "fixed",
       }}
     >
-      {/* Top bar */}
       <div className="d-flex justify-content-between align-items-center px-4 mb-3">
         <Button color="link" onClick={() => setMenuOpen(!menuOpen)}>
           <FaBars size={24} color="#FFC107" />
@@ -69,7 +94,6 @@ const Home = () => {
         </Button>
       </div>
 
-      {/* Menu lateral */}
       {menuOpen && (
         <div
           ref={menuRef}
@@ -87,15 +111,22 @@ const Home = () => {
         >
           <p style={{ color: "#FFC107", fontWeight: "bold" }}>Menu:</p>
           <ul style={{ listStyle: "none", paddingLeft: 0 }}>
-            <li className="mb-2"><Button color="link" style={{ color: "#FFC107" }} onClick={() => navigate("/auth/login")}>Ir para Login</Button></li>
-            <li className="mb-2"><Button color="link" style={{ color: "#FFC107" }}>Meus Fretes</Button></li>
-            <li className="mb-2"><Button color="link" style={{ color: "#FFC107" }}>Perfil</Button></li>
-            <li><Button color="link" style={{ color: "#FFC107" }}>Sair</Button></li>
+            <li className="mb-2">
+              <Button color="link" style={{ color: "#FFC107" }} onClick={() => navigate("/auth/login")}>Login</Button>
+            </li>
+            <li className="mb-2">
+              <Button color="link" style={{ color: "#FFC107" }}>Meus Fretes</Button>
+            </li>
+            <li className="mb-2">
+              <Button color="link" style={{ color: "#FFC107" }}>Perfil</Button>
+            </li>
+            <li>
+              <Button color="link" style={{ color: "#FFC107" }}>Sair</Button>
+            </li>
           </ul>
         </div>
       )}
 
-      {/* Logo */}
       <div className="text-center mb-4">
         <img
           src={require("../assets/img/brand/Logo frete Check.png")}
@@ -108,25 +139,55 @@ const Home = () => {
         />
       </div>
 
-      {/* Cards */}
       <Container>
         <Row>
           {fakeData.map((item) => (
-            <Col lg="12" md="12" key={item.id} className="mb-4">
+            <Col lg="8" md="10" className="mx-auto mb-4" key={item.id}>
               <Card
                 className="shadow"
                 style={{
-                  padding: "1rem",
-                  minHeight: "140px",
-                  borderRadius: "12px",
-                  backgroundColor: "rgba(255, 255, 255, 0.95)",
-                  backdropFilter: "blur(4px)",
+                  borderRadius: "16px",
+                  overflow: "hidden",
+                  backgroundColor: "rgba(255,255,255,0.95)",
                   color: "#000"
                 }}
               >
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  style={{ width: "100%", height: "200px", objectFit: "cover" }}
+                />
                 <CardBody>
-                  <CardTitle tag="h4" className="fw-bold">{item.title}</CardTitle>
-                  <CardText className="mb-3">{item.description}</CardText>
+                  <div className="d-flex justify-content-between align-items-center mb-2">
+                    <CardTitle tag="h4" className="fw-bold mb-0">{item.title}</CardTitle>
+                    <Badge color="info">{item.status}</Badge>
+                  </div>
+
+                  <CardText>{item.description}</CardText>
+
+                  <CardText className="mb-1">
+                    <small className="text-muted">
+                      <FaTruck className="me-1" /> Motorista: <strong>{item.driver}</strong>
+                    </small>
+                  </CardText>
+
+                  <CardText className="mb-2">
+                    <small className="text-muted">
+                      <FaPhoneAlt className="me-1" /> {item.phone}
+                    </small>
+                  </CardText>
+
+                  <div className="mb-3">
+                    {[...Array(5)].map((_, i) => (
+                      <FaStar
+                        key={i}
+                        color={i < Math.floor(item.rating) ? "#FFD700" : "#ccc"}
+                        size={18}
+                      />
+                    ))}
+                    <span className="ms-2 text-muted">({item.rating})</span>
+                  </div>
+
                   <Button
                     style={{
                       backgroundColor: "#FFC107",
@@ -135,9 +196,9 @@ const Home = () => {
                       border: "none"
                     }}
                     block
-                    onClick={() => navigate(`/admin/frete/${item.id}`)}  // Navega para detalhes do frete
+                    onClick={() => navigate(`/admin/frete/${item.id}`)}
                   >
-                    Visualizar
+                    Visualizar Detalhes
                   </Button>
                 </CardBody>
               </Card>
