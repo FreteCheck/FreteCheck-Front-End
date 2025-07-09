@@ -12,6 +12,7 @@ import {
   InputGroup,
   Row,
   Col,
+  Alert,
 } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 
@@ -23,10 +24,17 @@ const Register = () => {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [aceitouTermos, setAceitouTermos] = useState(false);
+  const [mensagemSucesso, setMensagemSucesso] = useState("");
 
   const handleRegister = async () => {
     if (!nome || !email || !senha) {
       alert("Preencha todos os campos.");
+      return;
+    }
+
+    if (!aceitouTermos) {
+      alert("Você precisa concordar com a Política de Privacidade.");
       return;
     }
 
@@ -38,8 +46,11 @@ const Register = () => {
       });
 
       if (response.ok) {
-        alert("Usuário cadastrado com sucesso!");
-        navigate("/auth/login");
+        setMensagemSucesso("Cadastro realizado com sucesso!");
+        setTimeout(() => {
+          setMensagemSucesso("");
+          navigate("/auth/login");
+        }, 3000);
       } else {
         const erro = await response.text();
         alert("Erro ao cadastrar: " + erro);
@@ -59,7 +70,6 @@ const Register = () => {
       }}
     >
       <Col lg="6" md="8">
-        {/* Logo */}
         <div className="text-center mb-4">
           <img
             src={logo}
@@ -71,7 +81,12 @@ const Register = () => {
           />
         </div>
 
-        {/* Card de Registro */}
+        {mensagemSucesso && (
+          <Alert color="success" className="text-center fw-bold shadow">
+            {mensagemSucesso}
+          </Alert>
+        )}
+
         <Card
           className="shadow-lg border-0"
           style={{
@@ -138,14 +153,22 @@ const Register = () => {
 
               <Row className="my-4">
                 <Col xs="12">
-                  <div className="custom-control custom-checkbox">
+                  <div className="form-check d-flex align-items-center">
                     <input
-                      className="custom-control-input"
-                      id="customCheckRegister"
+                      className="form-check-input"
                       type="checkbox"
+                      checked={aceitouTermos}
+                      onChange={(e) => setAceitouTermos(e.target.checked)}
+                      style={{
+                        width: "18px",
+                        height: "18px",
+                        backgroundColor: aceitouTermos ? "#FFC107" : "#fff",
+                        borderColor: "#FFC107",
+                        cursor: "pointer",
+                      }}
                     />
                     <label
-                      className="custom-control-label text-muted"
+                      className="form-check-label ms-2 text-muted"
                       htmlFor="customCheckRegister"
                     >
                       Concordo com a{" "}
@@ -179,7 +202,6 @@ const Register = () => {
           </CardBody>
         </Card>
 
-        {/* Link para login */}
         <Row className="mt-3">
           <Col className="text-center">
             <span
