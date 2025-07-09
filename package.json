@@ -45,7 +45,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "6.5.1",
     "ajv": "^8.16.0",
-    "bootstrap": "4.6.2",
+    "bootstrap": "^4.6.2",
     "chart.js": "2.9.4",
     "classnames": "2.3.2",
     "moment": "2.29.4",
@@ -58,7 +58,7 @@
     "react-icons": "^5.5.0",
     "react-router-dom": "6.21.1",
     "react-scripts": "5.0.1",
-    "reactstrap": "8.10.0",
+    "reactstrap": "^8.10.0",
     "sass": "1.69.5",
     "use-dark-mode": "^2.3.1"
   },

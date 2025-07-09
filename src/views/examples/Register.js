@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Card,
@@ -19,6 +19,40 @@ import bgImage from "../../assets/img/bg-fretecheck.png";
 
 const Register = () => {
   const navigate = useNavigate();
+
+  // Estados para armazenar os valores dos inputs
+  const [nome, setNome] = useState("");
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+
+  // Função para enviar os dados para o backend
+  const handleRegister = async () => {
+    if (!nome || !email || !senha) {
+      alert("Preencha todos os campos.");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:8080/api/usuarios", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ nome, email, senha }),
+      });
+
+      if (response.ok) {
+        alert("Usuário cadastrado com sucesso!");
+        navigate("/auth/login");
+      } else {
+        const erro = await response.text();
+        alert("Erro ao cadastrar: " + erro);
+      }
+    } catch (error) {
+      console.error("Erro:", error);
+      alert("Erro de conexão com o servidor.");
+    }
+  };
 
   return (
     <div
@@ -70,7 +104,12 @@ const Register = () => {
                       <i className="ni ni-hat-3 text-warning" />
                     </InputGroupText>
                   </InputGroupAddon>
-                  <Input placeholder="Nome" type="text" />
+                  <Input
+                    placeholder="Nome"
+                    type="text"
+                    value={nome}
+                    onChange={(e) => setNome(e.target.value)}
+                  />
                 </InputGroup>
               </FormGroup>
 
@@ -84,6 +123,8 @@ const Register = () => {
                   <Input
                     placeholder="Email"
                     type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     autoComplete="new-email"
                   />
                 </InputGroup>
@@ -99,6 +140,8 @@ const Register = () => {
                   <Input
                     placeholder="Senha"
                     type="password"
+                    value={senha}
+                    onChange={(e) => setSenha(e.target.value)}
                     autoComplete="new-password"
                   />
                 </InputGroup>
@@ -118,7 +161,11 @@ const Register = () => {
                     >
                       <span className="text-muted">
                         Concordo com a{" "}
-                        <a href="#!" onClick={(e) => e.preventDefault()} className="text-warning">
+                        <a
+                          href="#!"
+                          onClick={(e) => e.preventDefault()}
+                          className="text-warning"
+                        >
                           Política de Privacidade
                         </a>
                       </span>
@@ -137,6 +184,7 @@ const Register = () => {
                     border: "none",
                   }}
                   type="button"
+                  onClick={handleRegister}
                 >
                   Criar conta
                 </Button>
