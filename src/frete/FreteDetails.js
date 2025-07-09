@@ -12,7 +12,7 @@ import {
   Col,
 } from "reactstrap";
 import { FaArrowLeft, FaStar } from "react-icons/fa";
-import bgImage from "../assets/img/bg-fretecheck.png";
+import logo from "../assets/img/brand/Logo frete Check.png";
 
 const fakeData = [
   {
@@ -48,10 +48,10 @@ const FreteDetail = () => {
 
   if (!frete) {
     return (
-      <Container className="mt-5">
-        <h3>Frete não encontrado</h3>
-        <Button color="primary" onClick={() => navigate(-1)}>
-          <FaArrowLeft /> Voltar
+      <Container className="mt-5 text-center">
+        <h3 className="mb-4">🚫 Frete não encontrado</h3>
+        <Button color="warning" onClick={() => navigate(-1)}>
+          <FaArrowLeft className="me-2" /> Voltar
         </Button>
       </Container>
     );
@@ -59,64 +59,98 @@ const FreteDetail = () => {
 
   return (
     <div
-      className="min-vh-100 d-flex align-items-center"
+      className="min-vh-100 d-flex flex-column"
       style={{
-        backgroundImage: `url(${bgImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundAttachment: "fixed",
-        paddingTop: "3rem",
-        paddingBottom: "3rem",
+        backgroundColor: "#FFF7D6",
+        paddingTop: "2rem",
+        paddingBottom: "2rem",
       }}
     >
+      {/* Logo no topo */}
+      <div className="text-center mb-4">
+        <img
+          src={logo}
+          alt="Logo FreteCheck"
+          style={{
+            maxHeight: "90px",
+            filter: "drop-shadow(0 0 6px rgba(255, 204, 0, 0.8))",
+          }}
+        />
+      </div>
+
+      {/* Detalhes do frete */}
       <Container>
         <Row className="justify-content-center">
           <Col lg="8">
             <Card
               className="shadow-lg"
               style={{
-                borderRadius: "16px",
+                borderRadius: "20px",
+                backgroundColor: "#fff",
                 overflow: "hidden",
-                backgroundColor: "rgba(255, 255, 255, 0.95)",
               }}
             >
               <img
                 src={frete.image}
                 alt="Imagem do frete"
-                style={{ width: "100%", height: "220px", objectFit: "cover" }}
+                style={{
+                  width: "100%",
+                  height: "250px",
+                  objectFit: "cover",
+                }}
               />
-              <CardBody>
-                <CardTitle tag="h3" className="fw-bold mb-3">
+              <CardBody className="p-4">
+                <CardTitle
+                  tag="h3"
+                  className="fw-bold mb-4 text-center"
+                  style={{ fontFamily: "'Segoe UI', sans-serif" }}
+                >
                   {frete.title}
                 </CardTitle>
 
-                <CardText className="mb-2">
+                <CardText className="mb-3">
                   <strong>Descrição:</strong> {frete.description}
                 </CardText>
 
-                <CardText>
+                <CardText className="mb-3">
                   <strong>Motorista:</strong> {frete.driver}
                 </CardText>
 
-                <div className="mb-3">
+                <div className="mb-4 d-flex align-items-center">
                   {[...Array(5)].map((_, i) => (
                     <FaStar
                       key={i}
-                      color={i < Math.floor(frete.rating) ? "#FFD700" : "#ccc"}
-                      size={20}
+                      size={22}
+                      color={i < Math.floor(frete.rating) ? "#FFD700" : "#ddd"}
+                      style={{
+                        transition: "transform 0.2s",
+                        transform: i < frete.rating && i + 0.5 > frete.rating ? "scale(0.95)" : "scale(1)",
+                      }}
                     />
                   ))}
-                  <span className="ms-2 text-muted">({frete.rating})</span>
+                  <span className="ms-2 text-muted fw-bold">
+                    ({frete.rating.toFixed(1)})
+                  </span>
                 </div>
 
-                <Button
-                  color="warning"
-                  className="fw-bold text-dark"
-                  onClick={() => navigate(-1)}
-                >
-                  <FaArrowLeft className="me-2" />
-                  Voltar
-                </Button>
+                <div className="text-center">
+                  <Button
+                    style={{
+                      backgroundImage: "linear-gradient(to right, #FFC107, #FFB300)",
+                      color: "#000",
+                      fontWeight: "600",
+                      border: "none",
+                      borderRadius: "10px",
+                      padding: "0.75rem 1.5rem",
+                      fontSize: "1rem",
+                      boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+                    }}
+                    onClick={() => navigate(-1)}
+                  >
+                    <FaArrowLeft className="me-2" />
+                    Voltar
+                  </Button>
+                </div>
               </CardBody>
             </Card>
           </Col>

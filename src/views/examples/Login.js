@@ -14,21 +14,16 @@ import {
   Col,
 } from "reactstrap";
 import { useNavigate } from "react-router-dom";
-
-import bgImage from "../../assets/img/bg-fretecheck.png";
+import logo from "../../assets/img/brand/Logo frete Check.png";
 
 const Login = () => {
   const navigate = useNavigate();
 
   return (
     <div
-      className="min-vh-100 d-flex justify-content-center align-items-center text-white"
+      className="min-vh-100 d-flex justify-content-center align-items-center"
       style={{
-        backgroundImage: `url(${bgImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundAttachment: "fixed",
+        backgroundColor: "#FFF7D6",
         padding: "2rem",
       }}
     >
@@ -36,21 +31,21 @@ const Login = () => {
         {/* Logo */}
         <div className="text-center mb-3">
           <img
-            src={require("../../assets/img/brand/Logo frete Check.png")}
+            src={logo}
             alt="Logo FreteCheck"
             style={{
-              maxHeight: "100px",
-              filter: "drop-shadow(0px 0px 6px rgba(255, 204, 0, 0.9))",
+              maxHeight: "80px",
+              filter: "drop-shadow(0px 0px 5px rgba(255, 204, 0, 0.8))",
             }}
           />
         </div>
 
-        {/* Botão Voltar para Início */}
+        {/* Botão Voltar */}
         <div className="text-center mb-4">
           <Button
-            outline
-            color="warning"
+            color="link"
             size="sm"
+            style={{ color: "#FF9800", fontWeight: "bold" }}
             onClick={() => navigate("/admin/index")}
           >
             ← Voltar para Início
@@ -59,59 +54,76 @@ const Login = () => {
 
         {/* Card de Login */}
         <Card
-          className="shadow border-0"
+          className="shadow-lg border-0"
           style={{
-            borderRadius: "15px",
-            backgroundColor: "rgba(0, 0, 0, 0.8)",
-            color: "#fff",
+            borderRadius: "16px",
+            backgroundColor: "rgba(255, 255, 255, 0.97)",
           }}
         >
-          <CardHeader className="bg-transparent pb-4 text-center">
-            <h4 style={{ color: "#FFC107" }}>Bem-vindo de volta</h4>
-            <small className="text-white">Entre com suas credenciais</small>
+          <CardHeader className="pb-3 text-center" style={{ backgroundColor: "transparent" }}>
+            <h4 style={{ color: "#FFA000", fontWeight: "bold" }}>Bem-vindo de volta</h4>
+            <small className="text-muted">Acesse sua conta para continuar</small>
           </CardHeader>
 
           <CardBody className="px-lg-5 py-lg-4">
             <Form role="form">
               <FormGroup className="mb-3">
-                <InputGroup className="input-group-alternative">
+                <InputGroup>
                   <InputGroupAddon addonType="prepend">
-                    <InputGroupText>
+                    <InputGroupText style={{ backgroundColor: "#FFF8E1" }}>
                       <i className="ni ni-email-83 text-warning" />
                     </InputGroupText>
                   </InputGroupAddon>
-                  <Input placeholder="Email" type="email" autoComplete="new-email" />
+                  <Input
+                    placeholder="Email"
+                    type="email"
+                    autoComplete="new-email"
+                  />
                 </InputGroup>
               </FormGroup>
 
               <FormGroup>
-                <InputGroup className="input-group-alternative">
+                <InputGroup>
                   <InputGroupAddon addonType="prepend">
-                    <InputGroupText>
+                    <InputGroupText style={{ backgroundColor: "#FFF8E1" }}>
                       <i className="ni ni-lock-circle-open text-warning" />
                     </InputGroupText>
                   </InputGroupAddon>
-                  <Input placeholder="Senha" type="password" autoComplete="new-password" />
+                  <Input
+                    placeholder="Senha"
+                    type="password"
+                    autoComplete="new-password"
+                  />
                 </InputGroup>
               </FormGroup>
 
               <div className="custom-control custom-checkbox mb-3">
-                <input className="custom-control-input" id="customCheckLogin" type="checkbox" />
-                <label className="custom-control-label" htmlFor="customCheckLogin">
-                  <span className="text-muted">Lembrar-me</span>
+                <input
+                  className="custom-control-input"
+                  id="customCheckLogin"
+                  type="checkbox"
+                />
+                <label
+                  className="custom-control-label text-muted"
+                  htmlFor="customCheckLogin"
+                >
+                  Lembrar-me
                 </label>
               </div>
 
               <div className="text-center">
                 <Button
                   style={{
-                    backgroundColor: "#FFC107",
+                    backgroundImage: "linear-gradient(to right, #FFC107, #FFB300)",
                     color: "#000",
-                    fontWeight: "bold",
+                    fontWeight: "600",
                     border: "none",
+                    borderRadius: "8px",
+                    padding: "0.75rem 1.5rem",
+                    width: "100%",
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
                   }}
-                  className="my-3"
-                  type="button"
+                  type="submit"
                 >
                   Entrar
                 </Button>
@@ -125,19 +137,19 @@ const Login = () => {
           <Col xs="6">
             <span
               className="text-warning"
-              style={{ cursor: "pointer" }}
-              onClick={() => alert("Recuperação de senha em breve...")}
+              style={{ cursor: "pointer", fontWeight: "500" }}
+              onClick={() => alert("Função de recuperação em breve")}
             >
               <small>Esqueceu a senha?</small>
             </span>
           </Col>
-          <Col className="text-right" xs="6">
+          <Col className="text-end" xs="6">
             <span
               className="text-warning"
-              style={{ cursor: "pointer" }}
+              style={{ cursor: "pointer", fontWeight: "500" }}
               onClick={() => navigate("/auth/register")}
             >
-              <small>Criar nova conta</small>
+              <small>Criar conta</small>
             </span>
           </Col>
         </Row>
