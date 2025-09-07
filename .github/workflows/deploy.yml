@@ -47,5 +47,5 @@ jobs:
           # NOTA: Se o seu projeto gera uma pasta 'dist', altere aqui para './dist/'.
 
           # Pasta remota no servidor onde os ficheiros serão enviados
-          # 'fretecheck.com.br' é a pasta raiz do seu domínio principal.
-          server-dir: fretecheck.com.br/
+          # Este é o caminho padrão para domínios adicionais no cPanel.
+          server-dir: public_html/fretecheck.com.br/
