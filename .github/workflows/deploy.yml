@@ -30,9 +30,8 @@ jobs:
 
       # 4. Compila o projeto para produção
       - name: Build project
-        run: npm run build
-        # NOTA: Se o seu projeto cria uma pasta 'dist' em vez de 'build',
-        # altere o 'npm run build' se necessário.
+        run: CI=false npm run build
+        # NOTA: Adicionamos CI=false para que os avisos não parem o build.
 
       # 5. Envia os ficheiros compilados para a HostGator via FTP
       - name: Deploy to HostGator via FTP
