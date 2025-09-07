@@ -1,0 +1,52 @@
+# Nome do workflow que aparecerá na aba "Actions" do GitHub
+name: Deploy Frontend to HostGator
+
+# Gatilho: Este workflow roda toda vez que houver um push na branch 'main'
+on:
+  push:
+    branches:
+      - main
+
+# Tarefas a serem executadas
+jobs:
+  build-and-deploy:
+    # Usa a versão mais recente do Ubuntu como ambiente
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Baixa o código do seu repositório para o ambiente do workflow
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Configura o ambiente Node.js para compilar o projeto
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18' # Use a versão do Node compatível com o seu projeto
+
+      # 3. Instala as dependências do projeto
+      - name: Install dependencies
+        run: npm install
+
+      # 4. Compila o projeto para produção
+      - name: Build project
+        run: npm run build
+        # NOTA: Se o seu projeto cria uma pasta 'dist' em vez de 'build',
+        # altere o 'npm run build' se necessário.
+
+      # 5. Envia os ficheiros compilados para a HostGator via FTP
+      - name: Deploy to HostGator via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          # Servidor, utilizador e senha (lidos dos secrets que criámos)
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+
+          # Pasta local que será enviada (a pasta de build)
+          local-dir: ./build/
+          # NOTA: Se o seu projeto gera uma pasta 'dist', altere aqui para './dist/'.
+
+          # Pasta remota no servidor onde os ficheiros serão enviados
+          # 'fretecheck.com.br' é a pasta raiz do seu domínio principal.
+          server-dir: fretecheck.com.br/
