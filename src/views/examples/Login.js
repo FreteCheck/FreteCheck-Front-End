@@ -1,22 +1,4 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.2.4
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2024 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-
-// reactstrap components
+import React from "react";
 import {
   Button,
   Card,
@@ -31,63 +13,65 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import { useNavigate } from "react-router-dom";
+import logo from "../../assets/img/brand/Logo frete Check.png";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   return (
-    <>
-      <Col lg="5" md="7">
-        <Card className="bg-secondary shadow border-0">
-          <CardHeader className="bg-transparent pb-5">
-            <div className="text-muted text-center mt-2 mb-3">
-              <small>Sign in with</small>
-            </div>
-            <div className="btn-wrapper text-center">
-              <Button
-                className="btn-neutral btn-icon"
-                color="default"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-              >
-                <span className="btn-inner--icon">
-                  <img
-                    alt="..."
-                    src={
-                      require("../../assets/img/icons/common/github.svg")
-                        .default
-                    }
-                  />
-                </span>
-                <span className="btn-inner--text">Github</span>
-              </Button>
-              <Button
-                className="btn-neutral btn-icon"
-                color="default"
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-              >
-                <span className="btn-inner--icon">
-                  <img
-                    alt="..."
-                    src={
-                      require("../../assets/img/icons/common/google.svg")
-                        .default
-                    }
-                  />
-                </span>
-                <span className="btn-inner--text">Google</span>
-              </Button>
-            </div>
+    <div
+      className="min-vh-100 d-flex justify-content-center align-items-center"
+      style={{
+        backgroundColor: "#FFF7D6",
+        padding: "2rem",
+      }}
+    >
+      <Col lg="5" md="8">
+        {/* Logo */}
+        <div className="text-center mb-3">
+          <img
+            src={logo}
+            alt="Logo FreteCheck"
+            style={{
+              maxHeight: "80px",
+              filter: "drop-shadow(0px 0px 5px rgba(255, 204, 0, 0.8))",
+            }}
+          />
+        </div>
+
+        {/* Botão Voltar */}
+        <div className="text-center mb-4">
+          <Button
+            color="link"
+            size="sm"
+            style={{ color: "#FF9800", fontWeight: "bold" }}
+            onClick={() => navigate("/admin/index")}
+          >
+            ← Voltar para Início
+          </Button>
+        </div>
+
+        {/* Card de Login */}
+        <Card
+          className="shadow-lg border-0"
+          style={{
+            borderRadius: "16px",
+            backgroundColor: "rgba(255, 255, 255, 0.97)",
+          }}
+        >
+          <CardHeader className="pb-3 text-center" style={{ backgroundColor: "transparent" }}>
+            <h4 style={{ color: "#FFA000", fontWeight: "bold" }}>Bem-vindo de volta</h4>
+            <small className="text-muted">Acesse sua conta para continuar</small>
           </CardHeader>
-          <CardBody className="px-lg-5 py-lg-5">
-            <div className="text-center text-muted mb-4">
-              <small>Or sign in with credentials</small>
-            </div>
+
+          <CardBody className="px-lg-5 py-lg-4">
             <Form role="form">
               <FormGroup className="mb-3">
-                <InputGroup className="input-group-alternative">
+                <InputGroup>
                   <InputGroupAddon addonType="prepend">
-                    <InputGroupText>
-                      <i className="ni ni-email-83" />
+                    <InputGroupText style={{ backgroundColor: "#FFF8E1" }}>
+                      <i className="ni ni-email-83 text-warning" />
                     </InputGroupText>
                   </InputGroupAddon>
                   <Input
@@ -97,63 +81,80 @@ const Login = () => {
                   />
                 </InputGroup>
               </FormGroup>
+
               <FormGroup>
-                <InputGroup className="input-group-alternative">
+                <InputGroup>
                   <InputGroupAddon addonType="prepend">
-                    <InputGroupText>
-                      <i className="ni ni-lock-circle-open" />
+                    <InputGroupText style={{ backgroundColor: "#FFF8E1" }}>
+                      <i className="ni ni-lock-circle-open text-warning" />
                     </InputGroupText>
                   </InputGroupAddon>
                   <Input
-                    placeholder="Password"
+                    placeholder="Senha"
                     type="password"
                     autoComplete="new-password"
                   />
                 </InputGroup>
               </FormGroup>
-              <div className="custom-control custom-control-alternative custom-checkbox">
+
+              <div className="custom-control custom-checkbox mb-3">
                 <input
                   className="custom-control-input"
-                  id=" customCheckLogin"
+                  id="customCheckLogin"
                   type="checkbox"
                 />
                 <label
-                  className="custom-control-label"
-                  htmlFor=" customCheckLogin"
+                  className="custom-control-label text-muted"
+                  htmlFor="customCheckLogin"
                 >
-                  <span className="text-muted">Remember me</span>
+                  Lembrar-me
                 </label>
               </div>
+
               <div className="text-center">
-                <Button className="my-4" color="primary" type="button">
-                  Sign in
+                <Button
+                  style={{
+                    backgroundImage: "linear-gradient(to right, #FFC107, #FFB300)",
+                    color: "#000",
+                    fontWeight: "600",
+                    border: "none",
+                    borderRadius: "8px",
+                    padding: "0.75rem 1.5rem",
+                    width: "100%",
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                  }}
+                  type="submit"
+                >
+                  Entrar
                 </Button>
               </div>
             </Form>
           </CardBody>
         </Card>
+
+        {/* Links extras */}
         <Row className="mt-3">
           <Col xs="6">
-            <a
-              className="text-light"
-              href="#pablo"
-              onClick={(e) => e.preventDefault()}
+            <span
+              className="text-warning"
+              style={{ cursor: "pointer", fontWeight: "500" }}
+              onClick={() => alert("Função de recuperação em breve")}
             >
-              <small>Forgot password?</small>
-            </a>
+              <small>Esqueceu a senha?</small>
+            </span>
           </Col>
-          <Col className="text-right" xs="6">
-            <a
-              className="text-light"
-              href="#pablo"
-              onClick={(e) => e.preventDefault()}
+          <Col className="text-end" xs="6">
+            <span
+              className="text-warning"
+              style={{ cursor: "pointer", fontWeight: "500" }}
+              onClick={() => navigate("/auth/register")}
             >
-              <small>Create new account</small>
-            </a>
+              <small>Criar conta</small>
+            </span>
           </Col>
         </Row>
       </Col>
-    </>
+    </div>
   );
 };
 

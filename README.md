@@ -28,6 +28,6 @@ $ cd src
 $ npm install
 
 # Inicia o sistema
-$ npm run dev
+$ ...
 ```
 
