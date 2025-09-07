@@ -37,7 +37,7 @@ jobs:
       - name: Deploy to HostGator via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          # Servidor, utilizador e senha (lidos dos secrets que criámos)
+          # Servidor, utilizador e senha (lidos dos secrets que atualizámos)
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
@@ -46,6 +46,9 @@ jobs:
           local-dir: ./build/
           # NOTA: Se o seu projeto gera uma pasta 'dist', altere aqui para './dist/'.
 
-          # Pasta remota no servidor onde os ficheiros serão enviados
-          # Este é o diretório raiz para o domínio fretecheck.com.br
-          server-dir: fretecheck.com.br/
+          # Pasta remota: "./" significa o diretório atual.
+          # Como o nosso utilizador de FTP já começa na pasta correta,
+          # enviamos para o diretório atual.
+          server-dir: ./
+          # A linha abaixo impede a criação de pastas extras e a exclusão da pasta .git
+          exclude-git: true
