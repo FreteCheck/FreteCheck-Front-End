@@ -1,23 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import {
-  Container,
-  Row,
-  Col,
-  Card,
-  CardBody,
-  CardTitle,
-  CardText,
-  Button,
-  Badge
+  Container, Row, Col, Card, CardBody, CardTitle,
+  CardText, Button, Badge
 } from "reactstrap";
 import {
-  FaMoon,
-  FaSun,
-  FaBars,
-  FaStar,
-  FaTruck,
-  FaPhoneAlt,
-  FaBox
+  FaMoon, FaSun, FaBars, FaStar,
+  FaTruck, FaPhoneAlt, FaBox
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/img/brand/Logo frete Check.png";
@@ -25,7 +13,7 @@ import logo from "../assets/img/brand/Logo frete Check.png";
 const Home = () => {
   const [dark, setDark] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [fretes, setFretes] = useState([]); // 🔹 dados da API
+  const [fretes, setFretes] = useState([]);
   const menuRef = useRef(null);
   const navigate = useNavigate();
 
@@ -33,23 +21,19 @@ const Home = () => {
   useEffect(() => {
     fetch("http://localhost:8080/api/fretes")
       .then((res) => {
-        if (!res.ok) {
-          throw new Error("Erro ao buscar fretes");
-        }
+        if (!res.ok) throw new Error("Erro na API: " + res.status);
         return res.json();
       })
       .then((data) => setFretes(data))
       .catch((err) => console.error("Erro ao carregar fretes:", err));
   }, []);
 
-  // 🔹 Tema
   const toggleTheme = () => {
     setDark(!dark);
     document.body.classList.toggle("bg-dark");
     document.body.classList.toggle("text-white");
   };
 
-  // 🔹 Fechar menu ao clicar fora
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -59,22 +43,14 @@ const Home = () => {
     if (menuOpen) {
       document.addEventListener("mousedown", handleClickOutside);
     }
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [menuOpen]);
 
   const backgroundColor = dark ? "#1d1d1d" : "#FFF7D6";
   const cardColor = dark ? "#2a2a2a" : "#ffffff";
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        backgroundColor,
-        color: dark ? "#fff" : "#222",
-      }}
-    >
+    <div style={{ minHeight: "100vh", backgroundColor, color: dark ? "#fff" : "#222" }}>
       {/* Header */}
       <header
         className="d-flex justify-content-between align-items-center px-4 py-3 shadow"
@@ -85,11 +61,7 @@ const Home = () => {
         </Button>
         <img src={logo} alt="Logo FreteCheck" style={{ height: "42px" }} />
         <Button color="link" onClick={toggleTheme}>
-          {dark ? (
-            <FaSun size={20} color="#FFC107" />
-          ) : (
-            <FaMoon size={20} color="#FFC107" />
-          )}
+          {dark ? <FaSun size={20} color="#FFC107" /> : <FaMoon size={20} color="#FFC107" />}
         </Button>
       </header>
 
@@ -99,42 +71,19 @@ const Home = () => {
           ref={menuRef}
           style={{
             position: "fixed",
-            top: 0,
-            left: 0,
-            width: "260px",
-            height: "100vh",
+            top: 0, left: 0,
+            width: "260px", height: "100vh",
             backgroundColor: dark ? "#2a2a2a" : "#fff",
             boxShadow: "4px 0 10px rgba(0,0,0,0.2)",
-            padding: "1.5rem",
-            zIndex: 2000,
+            padding: "1.5rem", zIndex: 2000
           }}
         >
           <h5 style={{ color: "#FFC107" }}>Menu</h5>
           <ul className="list-unstyled mt-4">
-            <li>
-              <Button
-                color="link"
-                onClick={() => navigate("/auth/login")}
-                style={{ color: "#FFC107" }}
-              >
-                Login
-              </Button>
-            </li>
-            <li>
-              <Button color="link" style={{ color: "#FFC107" }}>
-                Meus Fretes
-              </Button>
-            </li>
-            <li>
-              <Button color="link" style={{ color: "#FFC107" }}>
-                Perfil
-              </Button>
-            </li>
-            <li>
-              <Button color="link" style={{ color: "#FFC107" }}>
-                Sair
-              </Button>
-            </li>
+            <li><Button color="link" onClick={() => navigate("/login")} style={{ color: "#FFC107" }}>Login</Button></li>
+            <li><Button color="link" style={{ color: "#FFC107" }}>Meus Fretes</Button></li>
+            <li><Button color="link" style={{ color: "#FFC107" }}>Perfil</Button></li>
+            <li><Button color="link" style={{ color: "#FFC107" }}>Sair</Button></li>
           </ul>
         </div>
       )}
@@ -142,97 +91,76 @@ const Home = () => {
       {/* Conteúdo */}
       <Container className="mt-5">
         <Row>
-          {fretes.length === 0 ? (
-            <p className="text-center">Nenhum frete encontrado 🚚</p>
-          ) : (
-            fretes.map((item) => (
-              <Col key={item.id} md="8" className="mx-auto mb-5">
-                <Card
-                  style={{
-                    borderRadius: "20px",
-                    backgroundColor: cardColor,
-                    color: dark ? "#fff" : "#222",
-                    boxShadow: "0 8px 18px rgba(0,0,0,0.12)",
-                    transition: "0.3s all",
-                  }}
-                >
-                  <img
-                    src={"https://source.unsplash.com/800x400/?truck,cargo"}
-                    alt={item.origem + " → " + item.destino}
-                    style={{ width: "100%", height: "220px", objectFit: "cover" }}
-                  />
-                  <CardBody>
-                    <div className="d-flex justify-content-between align-items-center mb-2">
-                      <CardTitle tag="h5" className="fw-bold">
-                        {item.origem} → {item.destino}
-                      </CardTitle>
-                      <Badge
-                        color={
-                          item.status === "Disponível"
-                            ? "success"
-                            : item.status === "Entregue"
-                            ? "secondary"
-                            : "warning"
-                        }
-                        className="px-3 py-1 text-uppercase"
-                      >
-                        {item.status}
-                      </Badge>
-                    </div>
-
-                    <CardText className="mb-2 d-flex align-items-center">
-                      <FaBox className="me-2 text-danger" /> {item.descricao}
-                    </CardText>
-                    <CardText className="mb-1 text-muted d-flex align-items-center">
-                      <FaTruck className="me-2 text-danger" /> Motorista:{" "}
-                      {item.motorista}
-                    </CardText>
-                    <CardText className="mb-3 text-muted d-flex align-items-center">
-                      <FaPhoneAlt className="me-2 text-danger" /> {item.telefone}
-                    </CardText>
-
-                    <div className="d-flex align-items-center mb-3">
-                      {[...Array(5)].map((_, i) => (
-                        <FaStar
-                          key={i}
-                          color={i < Math.floor(item.rating) ? "#FFD700" : "#ccc"}
-                          size={18}
-                        />
-                      ))}
-                      <span className="ms-2 text-muted">({item.rating})</span>
-                    </div>
-
-                    <Button
-                      onClick={() => navigate(`/admin/frete/${item.id}`)}
-                      style={{
-                        background: "linear-gradient(to right, #FFC107, #FF9800)",
-                        color: "#000",
-                        fontWeight: 600,
-                        width: "100%",
-                        padding: "0.75rem",
-                        borderRadius: "10px",
-                        border: "none",
-                      }}
+          {fretes.map((item) => (
+            <Col key={item.id} md="8" className="mx-auto mb-5">
+              <Card
+                style={{
+                  borderRadius: "20px",
+                  backgroundColor: cardColor,
+                  color: dark ? "#fff" : "#222",
+                  boxShadow: "0 8px 18px rgba(0,0,0,0.12)",
+                  transition: "0.3s all"
+                }}
+              >
+                <img
+                  src={"https://source.unsplash.com/800x400/?truck,cargo"}
+                  alt={`${item.origem} → ${item.destino}`}
+                  style={{ width: "100%", height: "220px", objectFit: "cover" }}
+                />
+                <CardBody>
+                  <div className="d-flex justify-content-between align-items-center mb-2">
+                    <CardTitle tag="h5" className="fw-bold">
+                      {item.origem} → {item.destino}
+                    </CardTitle>
+                    <Badge
+                      color={item.status === "Disponível" ? "success" : item.status === "Entregue" ? "secondary" : "warning"}
+                      className="px-3 py-1 text-uppercase"
                     >
-                      Visualizar Detalhes
-                    </Button>
-                  </CardBody>
-                </Card>
-              </Col>
-            ))
-          )}
+                      {item.status}
+                    </Badge>
+                  </div>
+
+                  <CardText className="mb-2 d-flex align-items-center">
+                    <FaBox className="me-2 text-danger" /> {item.descricao}
+                  </CardText>
+                  <CardText className="mb-1 text-muted d-flex align-items-center">
+                    <FaTruck className="me-2 text-danger" /> Motorista: {item.motorista}
+                  </CardText>
+                  <CardText className="mb-3 text-muted d-flex align-items-center">
+                    <FaPhoneAlt className="me-2 text-danger" /> {item.telefone}
+                  </CardText>
+
+                  <div className="d-flex align-items-center mb-3">
+                    {[...Array(5)].map((_, i) => (
+                      <FaStar
+                        key={i}
+                        color={i < Math.floor(item.rating) ? "#FFD700" : "#ccc"}
+                        size={18}
+                      />
+                    ))}
+                    <span className="ms-2 text-muted">({item.rating})</span>
+                  </div>
+
+                  <Button
+                    onClick={() => navigate(`/frete/${item.id}`)}
+                    style={{
+                      background: "linear-gradient(to right, #FFC107, #FF9800)",
+                      color: "#000", fontWeight: 600,
+                      width: "100%", padding: "0.75rem",
+                      borderRadius: "10px", border: "none"
+                    }}
+                  >
+                    Visualizar Detalhes
+                  </Button>
+                </CardBody>
+              </Card>
+            </Col>
+          ))}
         </Row>
       </Container>
 
-      {/* Footer */}
-      <footer
-        className="text-center mt-5 pb-3"
-        style={{ opacity: 0.75, fontSize: "0.9rem" }}
-      >
-        <p>
-          &copy; 2025 FreteCheck • Soluções inteligentes para transporte de
-          cargas
-        </p>
+      <footer className="text-center mt-5 pb-3" style={{ opacity: 0.75, fontSize: "0.9rem" }}>
+        <p>&copy; 2025 FreteCheck • Soluções inteligentes para transporte de cargas</p>
       </footer>
     </div>
   );
