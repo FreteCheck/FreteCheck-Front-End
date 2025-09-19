@@ -1,65 +1,32 @@
 import React, { useState, useRef, useEffect } from "react";
 import {
-  Container,
-  Row,
-  Col,
-  Card,
-  CardBody,
-  CardTitle,
-  CardText,
-  Button,
-  Badge
+  Container, Row, Col, Card, CardBody, CardTitle,
+  CardText, Button, Badge
 } from "reactstrap";
 import {
-  FaMoon,
-  FaSun,
-  FaBars,
-  FaStar,
-  FaTruck,
-  FaPhoneAlt,
-  FaBox
+  FaMoon, FaSun, FaBars, FaStar,
+  FaTruck, FaPhoneAlt, FaBox
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/img/brand/Logo frete Check.png";
 
-const fakeData = [
-  {
-    id: 1,
-    title: "Frete São Paulo → Curitiba",
-    description: "Carga até 300kg - R$ 800",
-    image: "https://source.unsplash.com/800x400/?truck",
-    rating: 4.5,
-    driver: "Carlos Silva",
-    status: "Disponível",
-    phone: "(11) 98888-1122"
-  },
-  {
-    id: 2,
-    title: "Frete Curitiba → Londrina",
-    description: "Carga leve - R$ 500",
-    image: "https://source.unsplash.com/800x400/?cargo",
-    rating: 4.0,
-    driver: "Joana Lima",
-    status: "Em andamento",
-    phone: "(41) 97777-2233"
-  },
-  {
-    id: 3,
-    title: "Frete Rio de Janeiro → BH",
-    description: "Entrega expressa - R$ 1000",
-    image: "https://source.unsplash.com/800x400/?highway",
-    rating: 5.0,
-    driver: "Rogério Alves",
-    status: "Entregue",
-    phone: "(21) 96666-3344"
-  },
-];
-
 const Home = () => {
   const [dark, setDark] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [fretes, setFretes] = useState([]);
   const menuRef = useRef(null);
   const navigate = useNavigate();
+
+  // 🔹 Buscar fretes do backend
+  useEffect(() => {
+    fetch("http://localhost:8080/api/fretes")
+      .then((res) => {
+        if (!res.ok) throw new Error("Erro na API: " + res.status);
+        return res.json();
+      })
+      .then((data) => setFretes(data))
+      .catch((err) => console.error("Erro ao carregar fretes:", err));
+  }, []);
 
   const toggleTheme = () => {
     setDark(!dark);
@@ -76,9 +43,7 @@ const Home = () => {
     if (menuOpen) {
       document.addEventListener("mousedown", handleClickOutside);
     }
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [menuOpen]);
 
   const backgroundColor = dark ? "#1d1d1d" : "#FFF7D6";
@@ -106,19 +71,16 @@ const Home = () => {
           ref={menuRef}
           style={{
             position: "fixed",
-            top: 0,
-            left: 0,
-            width: "260px",
-            height: "100vh",
+            top: 0, left: 0,
+            width: "260px", height: "100vh",
             backgroundColor: dark ? "#2a2a2a" : "#fff",
             boxShadow: "4px 0 10px rgba(0,0,0,0.2)",
-            padding: "1.5rem",
-            zIndex: 2000
+            padding: "1.5rem", zIndex: 2000
           }}
         >
           <h5 style={{ color: "#FFC107" }}>Menu</h5>
           <ul className="list-unstyled mt-4">
-            <li><Button color="link" onClick={() => navigate("/auth/login")} style={{ color: "#FFC107" }}>Login</Button></li>
+            <li><Button color="link" onClick={() => navigate("/login")} style={{ color: "#FFC107" }}>Login</Button></li>
             <li><Button color="link" style={{ color: "#FFC107" }}>Meus Fretes</Button></li>
             <li><Button color="link" style={{ color: "#FFC107" }}>Perfil</Button></li>
             <li><Button color="link" style={{ color: "#FFC107" }}>Sair</Button></li>
@@ -129,7 +91,7 @@ const Home = () => {
       {/* Conteúdo */}
       <Container className="mt-5">
         <Row>
-          {fakeData.map((item) => (
+          {fretes.map((item) => (
             <Col key={item.id} md="8" className="mx-auto mb-5">
               <Card
                 style={{
@@ -141,14 +103,14 @@ const Home = () => {
                 }}
               >
                 <img
-                  src={item.image}
-                  alt={item.title}
+                  src={"https://source.unsplash.com/800x400/?truck,cargo"}
+                  alt={`${item.origem} → ${item.destino}`}
                   style={{ width: "100%", height: "220px", objectFit: "cover" }}
                 />
                 <CardBody>
                   <div className="d-flex justify-content-between align-items-center mb-2">
                     <CardTitle tag="h5" className="fw-bold">
-                      {item.title}
+                      {item.origem} → {item.destino}
                     </CardTitle>
                     <Badge
                       color={item.status === "Disponível" ? "success" : item.status === "Entregue" ? "secondary" : "warning"}
@@ -159,13 +121,13 @@ const Home = () => {
                   </div>
 
                   <CardText className="mb-2 d-flex align-items-center">
-                    <FaBox className="me-2 text-danger" /> {item.description}
+                    <FaBox className="me-2 text-danger" /> {item.descricao}
                   </CardText>
                   <CardText className="mb-1 text-muted d-flex align-items-center">
-                    <FaTruck className="me-2 text-danger" /> Motorista: {item.driver}
+                    <FaTruck className="me-2 text-danger" /> Motorista: {item.motorista}
                   </CardText>
                   <CardText className="mb-3 text-muted d-flex align-items-center">
-                    <FaPhoneAlt className="me-2 text-danger" /> {item.phone}
+                    <FaPhoneAlt className="me-2 text-danger" /> {item.telefone}
                   </CardText>
 
                   <div className="d-flex align-items-center mb-3">
@@ -176,19 +138,16 @@ const Home = () => {
                         size={18}
                       />
                     ))}
-                    <span className="ms-2 text-muted">({item.rating.toFixed(1)})</span>
+                    <span className="ms-2 text-muted">({item.rating})</span>
                   </div>
 
                   <Button
-                    onClick={() => navigate(`/admin/frete/${item.id}`)}
+                    onClick={() => navigate(`/frete/${item.id}`)}
                     style={{
                       background: "linear-gradient(to right, #FFC107, #FF9800)",
-                      color: "#000",
-                      fontWeight: 600,
-                      width: "100%",
-                      padding: "0.75rem",
-                      borderRadius: "10px",
-                      border: "none"
+                      color: "#000", fontWeight: 600,
+                      width: "100%", padding: "0.75rem",
+                      borderRadius: "10px", border: "none"
                     }}
                   >
                     Visualizar Detalhes
